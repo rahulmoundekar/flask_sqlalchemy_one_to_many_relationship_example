@@ -17,6 +17,7 @@
     ```
  - Create EmployeeManagementSystem.py for development 
  - create folder structure like this :
+ 
     ![N|Solid](structure.PNG)
     
  - create db.py
