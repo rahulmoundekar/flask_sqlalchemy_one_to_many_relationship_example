@@ -1,0 +1,156 @@
+<head>
+    <title>EMS</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js"></script>
+</head>
+<body>
+<div id="content">
+    <nav class="navbar navbar-expand navbar-light bg-white topbar mb-4 static-top shadow">
+        <h1 class="h3 mb-2 text-gray-800">Employee Management System</h1>
+    </nav>
+    <!-- End of Topbar -->
+    <div class="container-fluid">
+        <div class="container">
+            <div class="card o-hidden border-0 shadow-lg my-5">
+                <div class="card-body p-0">
+                    <!-- Nested Row within Card Body -->
+                    <div class="row">
+
+                        <div class="col-lg-12">
+                            <div class="p-5">
+                                <div class="text-center">
+                                    <h1 class="h4 text-gray-900 mb-4">Create an Account!</h1>
+                                </div>
+                                {% with messages = get_flashed_messages(with_categories=true) %}
+                                {% if messages %}
+                                {% for category, message in messages %}
+                                <div class="alert alert-{{ category }} alert-dismissible fade show" role="alert">
+                                    <span>{{ message }}</span>
+                                    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                                        <span aria-hidden="true">&times;</span>
+                                    </button>
+                                </div>
+                                {% endfor %}
+                                {% endif %}
+                                {% endwith %}
+                                <form class="user" action="/" method="POST">
+                                    <input id="id" name="id" value="{{employee.id}}" type="hidden"
+                                           class="form-control input-md">
+                                    <!-- Text input-->
+                                    <div class="form-group">
+                                        <label class="col-md-4 control-label" for="name">Enter Name</label>
+                                        <div class="col-md-4">
+                                            <input id="name" name="name" type="text" placeholder="Enter Name"
+                                                   value="{{employee.name}}" class="form-control input-md" required>
+                                        </div>
+                                    </div>
+                                    <!-- Text input-->
+                                    <div class="form-group">
+                                        <label class="col-md-4 control-label" for="email">Enter Email</label>
+                                        <div class="col-md-4">
+                                            <input id="email" name="email" type="email" placeholder="Enter Email"
+                                                   value="{{employee.email}}" class="form-control input-md" required>
+                                        </div>
+                                    </div>
+                                    <!-- Text input-->
+                                    <div class="form-group">
+                                        <label class="col-md-4 control-label" for="mobile">Enter Mobile</label>
+                                        <div class="col-md-4">
+                                            <input id="mobile" name="contact" type="text" placeholder="Enter Mobile"
+                                                   value="{{employee.contact}}" class="form-control input-md" required>
+                                        </div>
+                                    </div>
+                                    <!-- Text input-->
+                                    <div class="form-group">
+                                        <label class="col-md-4 control-label" for="mobile">Enter Local Address </label>
+                                        <div class="col-md-4">
+                                            <input id="address1" name="address" type="text"
+                                                   placeholder="Enter Local Address" required
+                                                   value="{{addresses[0].addr}}" class="form-control input-md">
+                                        </div>
+                                    </div>
+                                    <!-- Text input-->
+                                    <div class="form-group">
+                                        <label class="col-md-4 control-label" for="mobile">Enter Permanent
+                                            Address</label>
+                                        <div class="col-md-4">
+                                            <input id="address2" name="address" type="text"
+                                                   placeholder="Enter Permanent Address" required
+                                                   value="{{addresses[1].addr}}" class="form-control input-md">
+                                        </div>
+                                    </div>
+
+                                    <div class="form-group">
+                                        <div class="col-md-4">
+                                            <button type="submit" class="btn btn-primary btn-user btn-block">
+                                                Register Account
+                                            </button>
+                                        </div>
+                                    </div>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+
+        <!-- DataTales Example -->
+        <div class="card shadow mb-4">
+            <div class="card-header py-3">
+                <h6 class="m-0 font-weight-bold text-primary">Employee Information DataTables</h6>
+            </div>
+            <div class="card-body">
+                <div class="table-responsive">
+                    <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
+                        <thead>
+                        <tr>
+                            <th>ID</th>
+                            <th>NAME</th>
+                            <th>MOBILE</th>
+                            <th>EMAIL</th>
+                            <th colspan="2">ADDRESS</th>
+                            <th>ACTIONS</th>
+                        </tr>
+                        </thead>
+                        <tfoot>
+                        <tr>
+                            <th>ID</th>
+                            <th>NAME</th>
+                            <th>MOBILE</th>
+                            <th>EMAIL</th>
+                            <th colspan="2">ADDRESS</th>
+                            <th>ACTIONS</th>
+                        </tr>
+                        </tfoot>
+                        <tbody>
+                        {%for employee in employees%}
+                        <tr>
+                            <td>{{employee.id}}</td>
+                            <td>{{employee.name}}</td>
+                            <td>{{employee.contact}}</td>
+                            <td>{{employee.email}}</td>
+                            {% for address in employee.addresses %}
+                            <td>{{address.addr}}</td>
+                            {% endfor %}
+                            <td>
+                                <a href="/{{employee.id}}">Modify</a>
+                                <a href="delete/{{employee.id}}">Delete</a>
+                            </td>
+                        </tr>
+                        {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+</div>
+</body>
